@@ -1,0 +1,28 @@
+kind: Module
+description: Results service
+type: container
+name: result
+services:
+  - name: result
+    devMode:
+      sync:
+        - target: /app
+          exclude: [node_modules]
+    replicas: 1
+    args: [nodemon, server.js]
+    dependencies:
+      - db-init
+    ports:
+      - name: ui
+        protocol: TCP
+        containerPort: 8080
+        servicePort: 80
+    env:
+      PGDATABASE: ${var.postgres-database}
+      PGUSER: ${var.postgres-username}
+      PGPASSWORD: ${var.postgres-password}
+tests:
+  - name: e2e
+    args: [echo, ok]
+    dependencies:
+      - result

@@ -1,0 +1,29 @@
+kind: Module
+description: The backend for the voting UI
+type: container
+name: api
+services:
+  - name: api
+    args: [python, app.py]
+    devMode:
+      sync:
+        - target: /app
+          mode: "one-way-replica"
+      args: ["/bin/sh", "-c", "ls /app/app.py | entr -r python /app/app.py"]
+    ports:
+      - name: http
+        containerPort: 8080
+        servicePort: 80
+    healthCheck:
+      httpGet:
+        path: /health
+        port: http
+    ingresses:
+      - path: /
+        port: http
+        hostname: api.${variables.base-hostname}
+    dependencies:
+      - redis
+tests:
+  - name: unit
+    args: [echo, ok]

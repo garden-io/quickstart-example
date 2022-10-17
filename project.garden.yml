@@ -1,0 +1,45 @@
+kind: Project
+name: vote-demo-quickstart
+defaultEnvironment: local
+dotIgnoreFiles: [.gitignore]
+
+variables:
+  postgres-username: postgres
+  postgres-database: postgres
+  postgres-password: postgres
+
+  user-namespace: vote-demo-quickstart-${local.username}
+
+environments:
+  - name: local
+    defaultNamespace: ${var.user-namespace}
+    variables:
+      base-hostname: local.app.garden
+  - name: remote
+    defaultNamespace: ${var.user-namespace}
+    variables:
+      base-hostname: "<add you values here>"
+
+providers:
+  - name: local-kubernetes
+    environments: [local]
+    namespace: ${environment.namespace}
+    defaultHostname: ${var.base-hostname}
+
+  # You can use Garden with remote Kubernetes clusters as well. In fact, that's where it shines!
+  # Please see our docs on using the (remote) Kubernetes plugin to learn how to configure
+  # the values below.
+  - name: kubernetes
+    environments: [remote]
+    context: "<add your values>"
+    ingressClass: "nginx"
+    buildMode: cluster-buildkit
+    imagePullSecrets:
+      - name: "<add your values>"
+        namespace: default
+    deploymentRegistry:
+      hostname: "<add your values>"
+      namespace: "<add your values>"
+    namespace: ${environment.namespace}
+    defaultHostname: ${var.base-hostname}
+
