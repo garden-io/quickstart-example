@@ -1,6 +1,6 @@
 # Garden 5 Minute Quickstart Example
 
-This is the GitHub repo for the example project from our [5 minute quickstart guide](https://docs.garden.io/quickstart).
+This is the GitHub repo for the example project from our [5 minute quickstart guide](https://docs.garden.io/basics/5-min-quickstart).
 
 We encourage you to follow the steps of the guide before deploying the project.
 
