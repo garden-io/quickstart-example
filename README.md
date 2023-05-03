@@ -20,7 +20,7 @@ Then deploy the project in dev mode by running the following from anywhere in th
 garden deploy --dev
 ```
 
-You can now visit the example project at http://vote.local.app.garden.
+You can now visit the example project at http://vote.local.demo.garden.
 
 The project itself doubles as an interactive guide that walks you through some common Garden commands and workflows. We encourage you to give it a spin!
 
