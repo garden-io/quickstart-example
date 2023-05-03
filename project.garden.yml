@@ -14,7 +14,7 @@ environments:
   - name: local
     defaultNamespace: ${var.user-namespace}
     variables:
-      base-hostname: local.app.garden
+      base-hostname: local.demo.garden
   - name: remote
     defaultNamespace: ${var.user-namespace}
     variables:
