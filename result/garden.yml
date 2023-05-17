@@ -1,28 +1,42 @@
-kind: Module
-description: Results service
+kind: Build
 type: container
 name: result
-services:
-  - name: result
-    devMode:
-      sync:
-        - target: /app
-          exclude: [node_modules]
-    replicas: 1
-    args: [nodemon, server.js]
-    dependencies:
-      - db-init
-    ports:
-      - name: ui
-        protocol: TCP
-        containerPort: 8080
-        servicePort: 80
-    env:
-      PGDATABASE: ${var.postgres-database}
-      PGUSER: ${var.postgres-username}
-      PGPASSWORD: ${var.postgres-password}
-tests:
-  - name: e2e
-    args: [echo, ok]
-    dependencies:
-      - result
+
+---
+kind: Deploy
+description: Deploy results service
+type: container
+name: result
+build: result
+dependencies:
+  - run.db-init
+spec:
+  replicas: 1
+  args: [nodemon, server.js]
+  sync:
+    paths:
+      - target: /app
+        exclude: [node_modules]
+  ingresses:
+    - path: /
+      port: ui
+      hostname: result.${var.base-hostname}
+  ports:
+    - name: ui
+      protocol: TCP
+      containerPort: 8080
+      servicePort: 80
+  env:
+    PGDATABASE: ${var.postgres-database}
+    PGUSER: ${var.postgres-username}
+    PGPASSWORD: ${var.postgres-password}
+
+---
+kind: Test
+name: e2e
+description: Test results service
+type: container
+build: result
+dependencies: [run.db-init]
+spec:
+  args: [echo, ok]
