@@ -1,48 +1,67 @@
-kind: Module
-description: The voting UI
+kind: Build
 name: vote
 type: container
 include: [.]
-services:
-  - name: vote
-    args: [npm, run, serve]
-    devMode:
-      sync:
-        - target: /app/src
-          source: src
-          mode: one-way-replica
-          exclude: [node_modules]
-    ports:
-      - name: http
-        containerPort: 8080
-        servicePort: 80
-    healthCheck:
-      httpGet:
-        path: /
-        port: http
-    ingresses:
-      - path: /
-        port: http
-        hostname: vote.${variables.base-hostname}
-    env:
-      HOSTNAME: vote.${variables.base-hostname}
-      VUE_APP_USERNAME: ${local.username}
-    dependencies:
-      - api
-      - result
-tests:
-  - name: unit
-    args: [npm, run, test:unit]
 
 ---
+kind: Deploy
+type: container
+name: vote
+build: vote
+description: The voting UI
+spec:
+  sync:
+    paths:
+      - target: /app/src
+        source: src
+        mode: one-way-replica
+        exclude: [node_modules]
+  ports:
+    - name: http
+      containerPort: 8080
+      servicePort: 80
+  healthCheck:
+    httpGet:
+      path: /
+      port: http
+  ingresses:
+    - path: /
+      port: http
+      hostname: vote.${var.base-hostname}
+  env:
+    HOSTNAME: vote.${var.base-hostname}
+    VUE_APP_USERNAME: ${local.username}
+dependencies:
+  - deploy.api
+  - deploy.result
 
-kind: Module
+---
+kind: Test
+type: container
+name: unit-vote
+build: vote
+spec:
+  args: [npm, run, test:unit]
+
+# E2E Runner configs
+---
+kind: Build
+name: e2e-runner
+type: container
+include: []
+
+---
+kind: Deploy
 type: container
 name: e2e-runner
-image: ${modules.vote.outputs.deployment-image-id}
-include: []
-tests:
-  - name: e2e
-    args: [npm, run, test:e2e]
-    dependencies:
-      - vote
+spec:
+  image: ${action.deploy.vote.outputs.deployedImageId}
+
+---
+kind: Test
+type: container
+name: e2e-vote
+build: e2e-runner
+dependencies: [deploy.vote]
+spec:
+  args: [npm, run, test:e2e]
