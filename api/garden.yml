@@ -34,15 +34,10 @@ dependencies:
   - deploy.redis
 
 ---
-# Setup tests
 kind: Test
-type: kubernetes-run # <-- This means the test will be executed in the previously deployed container, saving time.
+type: container
 name: unit
 description: Unit test for backend API
-dependencies:
-  - deploy.api # <-- This means the test will be executed after the deploy task of the frontend module
+build: api-build
 spec:
   args: ["echo", "ok"]
-  resource:
-    kind: Deployment
-    name: api
