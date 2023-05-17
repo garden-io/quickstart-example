@@ -1,29 +1,48 @@
-kind: Module
-description: The backend for the voting UI
+---
+kind: Build
+type: container
+name: api-build
+description: The backend build for the voting UI
+
+---
+kind: Deploy
 type: container
 name: api
-services:
-  - name: api
-    args: [python, app.py]
-    devMode:
-      sync:
-        - target: /app
-          mode: "one-way-replica"
-      args: ["/bin/sh", "-c", "ls /app/app.py | entr -r python /app/app.py"]
-    ports:
-      - name: http
-        containerPort: 8080
-        servicePort: 80
-    healthCheck:
-      httpGet:
-        path: /health
-        port: http
-    ingresses:
-      - path: /
-        port: http
-        hostname: api.${variables.base-hostname}
-    dependencies:
-      - redis
-tests:
-  - name: unit
-    args: [echo, ok]
+build: api-build
+description: The backend deploy for the voting UI
+spec:
+  args: [python, app.py]
+  sync:
+    args: ["/bin/sh", "-c", "ls /app/app.py | entr -r python /app/app.py"]
+    paths:
+      - target: /app
+        mode: "one-way-replica"
+  ports:
+    - name: http
+      protocol: TCP
+      containerPort: 8080
+      servicePort: 80
+  ingresses:
+    - path: /
+      port: http
+      hostname: api.${variables.base-hostname}
+  healthCheck:
+    httpGet:
+      path: /health
+      port: http
+dependencies:
+  - deploy.redis
+
+---
+# Setup tests
+kind: Test
+type: kubernetes-run # <-- This means the test will be executed in the previously deployed container, saving time.
+name: unit
+description: Unit test for backend API
+dependencies:
+  - deploy.api # <-- This means the test will be executed after the deploy task of the frontend module
+spec:
+  args: ["echo", "ok"]
+  resource:
+    kind: Deployment
+    name: api

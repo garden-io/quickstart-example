@@ -1,11 +1,10 @@
-kind: Module
-description: Redis service for queueing votes before they are aggregated
+kind: Deploy
 type: container
 name: redis
-image: redis:alpine
-services:
-  - name: redis
-    ports:
-      - name: redis
-        protocol: TCP
-        containerPort: 6379
+description: Redis service for queueing votes before they are aggregated
+spec:
+  image: redis:alpine
+  ports:
+    - name: redis
+      protocol: TCP
+      containerPort: 6379
