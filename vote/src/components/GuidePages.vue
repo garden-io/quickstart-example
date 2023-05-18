@@ -64,7 +64,7 @@
       <h1>Logs</h1>
       <p>
         To <span class="bold">stream logs from all the micro services</span> in this project, simply
-        run the following from the interactive Garden REPL:
+        run the following from the interactive Garden dev console:
         <Code type="block" text="logs --follow" />
         There are multiple different options for the logs command, you can run
         <Code text="logs --help" /> to learn more.
@@ -112,7 +112,7 @@
         Sometimes you need <span class="bold">direct access to your running services</span>.
         <br />
         <br />
-        To shell into the API server, using a separate terminal (not the REPL), you can run:
+        To shell into the API server, using a separate terminal (not the dev console), you can run:
         <Code type="block" text="garden exec api /bin/sh" />
         You can exit from the process by typing <Code text="exit" /> and hitting enter.
       </p>

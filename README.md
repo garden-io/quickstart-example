@@ -26,13 +26,13 @@ First clone this repo with:
 git clone https://github.com/garden-io/quickstart-example.git
 ```
 
-Enter the Garden REPL.
+Enter the Garden dev console.
 
 ```
 garden dev
 ```
 
-Then deploy the project in with hot-reloading by running
+Then deploy the project with hot-reloading enabled by running:
 
 ```
 deploy --sync
