@@ -55,7 +55,7 @@ kind: Deploy
 type: container
 name: e2e-runner
 spec:
-  image: ${action.deploy.vote.outputs.deployedImageId}
+  image: ${actions.deploy.vote.outputs.deployedImageId}
 
 ---
 kind: Test
