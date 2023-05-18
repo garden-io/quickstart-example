@@ -67,7 +67,8 @@
         run the following from the interactive Garden dev console:
         <Code type="block" text="logs --follow" />
         There are multiple different options for the logs command, you can run
-        <Code text="logs --help" /> to learn more.
+        <Code text="logs --help" /> to learn more. Stop following logs by turning off the log
+        monitors with <Code text="hide logs" />.
         <br />
         <br />
         If you click the vote buttons belows you should see the corresponding service logs.
