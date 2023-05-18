@@ -32,10 +32,10 @@ Enter the Garden REPL.
 garden dev
 ```
 
-Then deploy the project in dev mode by running `
+Then deploy the project in with hot-reloading by running
 
 ```
-deploy
+deploy --sync
 ```
 
 You can now visit the example project at http://vote.local.demo.garden.
