@@ -24,7 +24,7 @@
     <div v-if="currentPageName === 'hotReloading1'">
       <h1>Hot reloading I</h1>
       <p>
-        When you run the <Code text="deploy" /> command, hot reloading is enabled by default.
+        When you run the <Code text="deploy --sync" /> command, hot reloading is enabled by default.
         <br />
         <br />
         This means that changes you make to the code locally are
@@ -97,8 +97,8 @@
         Tasks are another Garden primitive that are useful for various set-up operations.
         <br />
         <br />
-        For example, when you first ran <Code text="deploy --dev" />, a task for initialising and
-        seeding the database was executed.
+        For example, when you first ran <Code text="deploy" />, a task for initialising and seeding
+        the database was executed.
         <br />
         <br />
         You can also run individual tasks directly. To reset the database to its original state,
