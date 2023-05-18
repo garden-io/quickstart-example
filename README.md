@@ -1,3 +1,7 @@
+# => Quickstart Example for Garden 0.12 <=
+
+The latest version of Garden is 0.13 (bonsai) and the quickstart is available in the main branch of this repo, [Bonsai Quickstart](https://github.com/garden-io/quickstart-example/tree/main). The quickstart below is for 0.12.
+
 # Garden 5 Minute Quickstart Example
 
 This is the GitHub repo for the example project from our [5 minute quickstart guide](https://docs.garden.io/basics/5-min-quickstart).
@@ -25,4 +29,3 @@ You can now visit the example project at http://vote.local.demo.garden.
 The project itself doubles as an interactive guide that walks you through some common Garden commands and workflows. We encourage you to give it a spin!
 
 Please send us your feedback or bug reports by opening a [GitHub issue in the Garden Core repository](https://github.com/garden-io/garden/issues).
-
