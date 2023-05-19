@@ -1,7 +1,8 @@
+apiVersion: garden.io/v1
 kind: Project
 name: vote-demo-quickstart
 defaultEnvironment: local
-dotIgnoreFiles: [.gitignore]
+dotIgnoreFile: .gitignore
 
 variables:
   postgres-username: postgres
