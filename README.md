@@ -1,20 +1,20 @@
 # Garden 5 Minute Quickstart Example
 
-This is the GitHub repo for the example project from our [5 minute quickstart guide](https://docs.garden.io/basics/5-min-quickstart).
+This is the GitHub repo for the example project from our [5 minute quickstart guide](https://docs.garden.io/basics/5-min-quickstart). This version is for Garden Bonsai (0.13), for older versions of Garden see [Quickstart 0.12](https://github.com/garden-io/quickstart-example/tree/0.12).
 
 We encourage you to follow the steps of the guide before deploying the project.
 
-## (Optional) Logging in to the Garden web UI
+## (Optional) Logging in to the Garden Dashboard
 
-Garden has a web app complementing the Garden Core CLI tool. The web app is available at https://app.garden.io. It is optional to use the web app when going through this quickstart guide.
+Garden has a web-based UI, Garden Dashboard, complementing the Garden Core CLI tool. The Dashboard is available at https://app.garden.io. It is optional to use the Dashboard when going through this quickstart guide.
 
-If you try out the web app, make sure to login on the command line using
+If you try out the Dashboard, make sure to login on the command line using
 
 ```
 garden login
 ```
 
-After a successful login, all commands will be streamed through to the Garden web app.
+After a successful login, all commands will be streamed through to the Garden Dashboard.
 
 ## Deploying the project
 
