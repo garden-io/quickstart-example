@@ -48,6 +48,7 @@ spec:
 kind: Build
 name: e2e-runner
 type: container
+include: [.]
 
 ---
 kind: Deploy
