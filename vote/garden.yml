@@ -48,12 +48,12 @@ spec:
 kind: Build
 name: e2e-runner
 type: container
-include: [.]
 
 ---
 kind: Deploy
 type: container
 name: e2e-runner
+dependencies: [deploy.vote]
 spec:
   image: ${actions.deploy.vote.outputs.deployedImageId}
 
