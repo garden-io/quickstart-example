@@ -24,7 +24,8 @@ fi
 nohup sudo ./k3s server --docker --disable=traefik --write-kubeconfig-mode=644 --snapshotter native > /dev/null 2>&1 &
 
 # Copy k3s config to user's home directory
-mkdir -p ~/.kube && \
+mkdir -p ~/.kube
+sleep 5
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 
 # Do not install NGINX ingress controller
