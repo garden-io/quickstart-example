@@ -36,5 +36,8 @@ sed -i 's/servicePort: 80/nodePort: 30000/' vote/garden.yml
 sed -i 's/vote.${var.base-hostname}/http:\/\/localhost:30000/' vote/garden.yml
 sed -i 's/hostname:/linkUrl:/' vote/garden.yml
 
+# Remove ingress blocks from result and api containers
+sed -i '/ingresses:/, /hostname: result.\${var.base-hostname}/d' api/garden.yml result/garden.yml
+
 # Exit with a success code
 exit 0
