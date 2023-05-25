@@ -21,12 +21,11 @@ else
 fi
 
 # Start k3s server with host Docker iamge support and Traefik ingress controller disabled
-nohup sudo ./k3s server --docker --disable=traefik --snapshotter native > /dev/null 2>&1 &
+nohup sudo ./k3s server --docker --disable=traefik --write-kubeconfig-mode=644 --snapshotter native > /dev/null 2>&1 &
 
 # Copy k3s config to user's home directory
 mkdir -p ~/.kube && \
-sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config && \
-sudo chmod 644 ~/.kube/config
+sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 
 # Do not install NGINX ingress controller
 sed -i 's/\(providers:\)/\1\n  - name: local-kubernetes\n    environments: [local]\n    namespace: ${environment.namespace}\n    defaultHostname: ${var.base-hostname}\n    setupIngressController: null/' project.garden.yml
