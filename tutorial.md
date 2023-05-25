@@ -72,6 +72,9 @@ test e2e
 
 These are tests shipped in the quickstart. Inspect their contents (or write your own!) by opening the `garden.yml` files for the <walkthrough-editor-open-file filePath="./quickstart-example/vote/garden.yml">unit test</walkthrough-editor-open-file> and an <walkthrough-editor-open-file filePath="./quickstart-example/result/garden.yml">e2e test</walkthrough-editor-open-file>.
 
+
+### Cleanup
+
 Cleanup your environment with:
 
 ```
