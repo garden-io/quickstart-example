@@ -12,7 +12,7 @@ then
     # Install Garden if it's not already installed
     curl -sL https://get.garden.io/install.sh | bash
     echo 'export PATH=$PATH:$HOME/.garden/bin' >> ~/.bashrc
-    source ~/.bashrc
+    export PATH=$PATH:$HOME/.garden/bin
 fi
 
 # Exit with a success code
