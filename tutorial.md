@@ -5,7 +5,7 @@
 This quickstart will show you how to start a minikube cluster and deploy a simple application to it using Garden.
 
 * **Setup your environment**
-  * Install Garden and start a minikube cluster you'll use to deploy your app to.
+  * Install Garden and start a k3d Kubernetes cluster you'll use to deploy your app to.
 * **Deploy the app**
   * You will be guided through the process of deploying a simple app to the cluster using Garden.
 * **Explore the dev console**
@@ -24,18 +24,10 @@ Open Cloud Shell by clicking
 
 ### Run the setup script
 
-Run the start script to prepare the environment. The script will install the latest version of `garden` and its dependencies:
+Run the start script to prepare the environment. The script will install the latest version of `garden` and its dependencies, and start a local k3d Kubernetes cluster.
 
 ```bash
 chmod +x start.sh && ./start.sh
-```
-
-### Start your cluster
-
-Create a minikube cluster by running:
-
-```bash
-minikube start
 ```
 
 ## Deploy the app
