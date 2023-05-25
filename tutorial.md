@@ -52,14 +52,6 @@ After a successful login, all commands will be streamed through to the Garden Da
 
 ## Deploy the app
 
-Use Cloud Shell to clone and navigate to the sample code to the Cloud Shell.
-
-Note: If the directory already exists, remove the previous files before cloning.
-
-```sh
-git clone https://github.com/garden-io/quickstart-example && cd quickstart-example
-```
-
 Garden ships with an interactive command center we call the **dev console**. To start the dev console, run:
 
 ```sh
