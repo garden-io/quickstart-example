@@ -10,9 +10,8 @@ sudo apt-get install -y rsync
 if ! command -v garden &> /dev/null
 then
     # Install Garden if it's not already installed
-    curl -sL https://get.garden.io/install.sh | bash
-    echo 'export PATH=$PATH:$HOME/.garden/bin' >> ~/.bashrc
-    export PATH=$PATH:$HOME/.garden/bin
+    curl -sSL https://github.com/garden-io/garden/releases/download/0.13.0/garden-0.13.0-linux-amd64.tar.gz | tar xz && \
+    sudo mv linux-amd64/garden /usr/local/bin
 fi
 
 # Exit with a success code
