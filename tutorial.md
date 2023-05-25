@@ -46,6 +46,12 @@ After running `garden dev`, you're ready to deploy your project. Run:
 deploy
 ```
 
+If you receive an error like the following, wait until the `deploy` has finished, then try again:
+
+```terminal
+Unable to connect to the server: stream error: stream ID 1; INTERNAL_ERROR; received from peer
+```
+
 ## Explore the dev console
 
 Still in the dev console, run a unit test:
@@ -62,7 +68,7 @@ test e2e
 
 ### Make your own
 
-These are tests shipped in the quickstart. Inspect their contents (or write your own!) by opening the `garden.yml` files for the <walkthrough-editor-open-file filePath="./quickstart-example/vote/garden.yml">unit test</walkthrough-editor-open-file> and an <walkthrough-editor-open-file filePath="./quickstart-example/result/garden.yml">e2e test</walkthrough-editor-open-file>.
+These are tests shipped in the quickstart. Inspect their contents (or write your own!) by opening the `garden.yml` files for the <walkthrough-editor-open-file filePath="quickstart-example/vote/garden.yml">unit test</walkthrough-editor-open-file> and an <walkthrough-editor-open-file filePath="quickstart-example/result/garden.yml">e2e test</walkthrough-editor-open-file>.
 
 
 ### Cleanup
