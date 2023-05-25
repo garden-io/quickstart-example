@@ -19,6 +19,8 @@ else
   k3d cluster create --k3s-arg '--disable=traefik@server:0' --network host
 fi
 
+sed -i 's/\(providers:\)/\1\n  - name: local-kubernetes\n    environments: [local]\n    namespace: ${environment.namespace}\n    defaultHostname: ${var.base-hostname}\n    setupIngressController: null/' project.garden.yml
+
 # Update the garden.yml file for the vote container
 sed -i 's/servicePort: 80/nodePort: 30000/' vote/garden.yml
 sed -i 's/vote.${var.base-hostname}/http:\/\/localhost:30000/' vote/garden.yml
