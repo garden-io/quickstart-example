@@ -38,18 +38,6 @@ Create a minikube cluster by running:
 minikube start
 ```
 
-## (Optional) Logging in to the Garden Dashboard
-
-Garden has a web-based UI, Garden Dashboard, complementing the Garden Core CLI tool. The Dashboard is available at <https://app.garden.io>. It is optional to use the Dashboard when going through this quickstart guide.
-
-If you try out the Dashboard, make sure to log in on the command line using
-
-```sh
-garden login
-```
-
-After a successful login, all commands will be streamed through to the Garden Dashboard.
-
 ## Deploy the app
 
 Garden ships with an interactive command center we call the **dev console**. To start the dev console, run:
