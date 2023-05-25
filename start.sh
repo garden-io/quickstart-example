@@ -14,5 +14,8 @@ then
     sudo mv linux-amd64/garden /usr/local/bin
 fi
 
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+k3d cluster create --k3s-arg '--disable=traefik@server:0' --network host
+
 # Exit with a success code
 exit 0
