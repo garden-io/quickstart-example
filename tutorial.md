@@ -56,9 +56,7 @@ Unable to connect to the server: stream error: stream ID 1; INTERNAL_ERROR; rece
 
 The dev console will print a `localhost` URL you can use to access the app. Open it by clicking the URL in the dev console or access it by tapping this link -> http://localhost:30000 and cast your vote!
 
-```sh
 ![vote UI](https://github.com/garden-io/quickstart-example/assets/59834693/f120848a-7467-40f8-840c-791b7b4a8fb2)
-```
 
 ## Explore the dev console
 
