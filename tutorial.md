@@ -58,7 +58,7 @@ The dev console will print a `localhost` URL you can use to access the app. Open
 
 ```sh
 ![vote UI](https://github.com/garden-io/quickstart-example/assets/59834693/f120848a-7467-40f8-840c-791b7b4a8fb2)
-
+```
 
 ## Explore the dev console
 
