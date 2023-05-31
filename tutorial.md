@@ -12,7 +12,7 @@ This quickstart will show you how to start a minikube cluster and deploy a simpl
   * Run tests, view logs, and more.
 ___
 
-**Time to complete**: <walkthrough-tutorial-duration duration=10></walkthrough-tutorial-duration>
+**Time to complete**: <walkthrough-tutorial-duration duration=5></walkthrough-tutorial-duration>
 Click the **Start** button to move to the next step.
 
 ## Setup your environment
