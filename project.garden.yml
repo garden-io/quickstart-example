@@ -10,7 +10,7 @@ variables:
   postgres-password: postgres
 
   # Replace underscores as Kubernetes namespaces do not allow them.
-  user-namespace: vote-demo-quickstart-${replace(local.username, "_", "-")}
+  user-namespace: vote-demo-quickstart-${kebabCase(local.username)}
 
 environments:
   - name: local
