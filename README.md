@@ -20,8 +20,8 @@ After a successful login, all commands will be streamed through to the Garden Da
 
 We have two options to deploy our quickstart example:
 
-- Make use of our brand new interactive environments that can help you deploy the project a little bit faster. ✅
-- You can either install the prerequisites in your computer and then follow the steps below. 💻
+- Make use of our brand new interactive environments that can help you deploy the project faster. ✅
+- You can also install the prerequisites in your computer and then follow the steps below. 💻
 
 ### Interactive environments
 
