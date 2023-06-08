@@ -10,11 +10,21 @@ Garden has a web-based UI, Garden Dashboard, complementing the Garden Core CLI t
 
 If you try out the Dashboard, make sure to login on the command line using
 
-```
+```console
 garden login
 ```
 
 After a successful login, all commands will be streamed through to the Garden Dashboard.
+
+## Interactive environments
+
+Preview Garden with our new interactive and install-free cloud-based playgrounds ✨.
+
+Click a button to start your Killercoda or Google Cloud Shell environment 👇🏼.
+
+<a href="https://go.garden.io/killercoda"><img src="https://raw.githubusercontent.com/garden-io/garden-interactive-environments/main/resources/img/killercoda-logo.png" alt="Killercoda logo in black and white." height="55px"/></a> [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://go.garden.io/cloudshell)
+
+If you find any bugs 🐛 or have suggestions to improve our labs please don't hesitate to reach out by creating an [issue here](https://github.com/garden-io/garden-interactive-environments) or by asking in our [Discord Community](https://go.garden.io/discord)🌸
 
 ## Deploying the project
 
@@ -22,19 +32,19 @@ After a successful login, all commands will be streamed through to the Garden Da
 
 First clone this repo with:
 
-```
+```console
 git clone https://github.com/garden-io/quickstart-example.git
 ```
 
 Enter the Garden dev console.
 
-```
+```console
 garden dev
 ```
 
 Then deploy the project with hot-reloading enabled by running:
 
-```
+```console
 deploy --sync
 ```
 
