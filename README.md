@@ -18,7 +18,7 @@ After a successful login, all commands will be streamed through to the Garden Da
 
 ## Interactive environments
 
-If you want to try Garden in an interactive cloud-based environment with a playground-like experience, use our new Killercoda and CloudShell environments ✨.
+Preview Garden with our new interactive and install-free cloud-based playgrounds ✨.
 
 Click on either of the two buttons below ⬇️.
 
