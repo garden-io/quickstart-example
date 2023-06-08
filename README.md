@@ -10,46 +10,41 @@ Garden has a web-based UI, Garden Dashboard, complementing the Garden Core CLI t
 
 If you try out the Dashboard, make sure to login on the command line using
 
-```
+```console
 garden login
 ```
 
 After a successful login, all commands will be streamed through to the Garden Dashboard.
 
-## Deploying the project
+## Interactive environments
 
-We have two options to deploy our quickstart example:
+If you want to try Garden in an interactive cloud-based environment with a playground-like experience, use our new Killercoda and CloudShell environments ✨.
 
-- Make use of our brand new interactive environments that can help you deploy the project faster. ✅
-- You can also install the prerequisites in your computer and then follow the steps below. 💻
-
-### Interactive environments
-
-Simply click any of the two buttons below ⬇️
+Click on either of the two buttons below ⬇️.
 
 <a href="https://go.garden.io/killercoda"><img src="https://raw.githubusercontent.com/garden-io/garden-interactive-environments/main/resources/img/killercoda-logo.png" alt="Killercoda logo in black and white." height="55px"/></a> [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://go.garden.io/cloudshell)
 
-If you find any bugs 🐛 or have suggestions to improve our labs please don't hesitate in reaching out through an issue towards this [repository](https://github.com/garden-io/garden-interactive-environments/blob/main/resources/img/killercoda-logo.png) or ask through our [Discord Community](https://go.garden.io/discord)🌸
+If you find any bugs 🐛 or have suggestions to improve our labs please don't hesitate to reach out by creating an [issue here](https://github.com/garden-io/garden-interactive-environments) or by asking in our [Discord Community](https://go.garden.io/discord)🌸
 
-### Local Installation
+## Deploying the project
 
 > Make sure you have Garden installed and Kubernetes running locally (e.g. with Minikube or Docker for Desktop) before deploying the project.
 
 First clone this repo with:
 
-```bash
+```console
 git clone https://github.com/garden-io/quickstart-example.git
 ```
 
 Enter the Garden dev console.
 
-```bash
+```console
 garden dev
 ```
 
 Then deploy the project with hot-reloading enabled by running:
 
-```bash
+```console
 deploy --sync
 ```
 
