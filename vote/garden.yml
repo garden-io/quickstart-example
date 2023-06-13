@@ -27,12 +27,12 @@ spec:
   ingresses:
     - path: /
       port: http
-      hostname: vote.${var.base-hostname}
+      hostname: vote-${var.base-hostname}
   env:
-    HOSTNAME: vote.${var.base-hostname}
+    HOSTNAME: vote-${var.base-hostname}
     VUE_APP_USERNAME: ${local.username}
 dependencies:
-  - deploy.api
+  - deploy.limiter
   - deploy.result
 
 ---
@@ -55,7 +55,7 @@ type: container
 name: e2e-runner
 dependencies: [deploy.vote]
 spec:
-  image: ${actions.deploy.vote.outputs.deployedImageId}
+  image: ${actions.build.vote.outputs.deploymentImageId}
 
 ---
 kind: Test

@@ -1,0 +1,8 @@
+FROM cosmtrek/air:latest as sync
+
+# We do not copy anything on purpose in sync mode.
+# Code will be copied using mutagen as part of Garden's code synchronization feature.
+RUN mkdir /app
+WORKDIR /app
+
+EXPOSE 8080

@@ -1,0 +1,54 @@
+# Production container to be used without sync mode.
+kind: Build
+type: container
+name: limiter-prod
+include:
+  - src
+  - Dockerfile
+exclude:
+  - src/tmp/*
+spec:
+  dockerfile: "Dockerfile"
+
+---
+
+# The sync container only provides the tools necessary for building the library
+# when using it during inner loop development together with Garden's sync mode.
+kind: Build
+type: container
+name: limiter-sync
+include:
+  - Dockerfile.syncmode
+spec:
+  dockerfile: "Dockerfile.syncmode"
+
+---
+
+kind: Deploy
+type: container
+name: limiter
+build:
+  $if: ${command.params contains 'sync' && (command.params.sync contains 'limiter' || isEmpty(command.params.sync))}
+  $then: limiter-sync
+  $else: limiter-prod
+include: []
+dependencies:
+  - deploy.api
+spec:
+  sync:
+    command: [air]
+    paths:
+      - target: /app
+        source: ./src
+        mode: one-way-replica
+        exclude: ["tmp/*/**"]
+  ports:
+    - name: http
+      containerPort: 8080
+      servicePort: 80
+  ingresses:
+    - path: /
+      port: http
+      hostname: limiter-${var.base-hostname}
+  env:
+    PROXY_URL: http://api
