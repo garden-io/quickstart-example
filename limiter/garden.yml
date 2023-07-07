@@ -28,7 +28,7 @@ kind: Deploy
 type: container
 name: limiter
 build:
-  $if: ${command.params contains 'sync' && (command.params.sync contains 'limiter' || isEmpty(command.params.sync))}
+  $if: ${this.mode=='sync'}
   $then: limiter-sync
   $else: limiter-prod
 include: []
