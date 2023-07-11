@@ -46,15 +46,9 @@ After running `garden dev`, you're ready to deploy your project. Run:
 deploy
 ```
 
-If you receive an error like the following, wait until the `deploy` has finished, then try again:
-
-```terminal
-Unable to connect to the server: stream error: stream ID 1; INTERNAL_ERROR; received from peer
-```
-
 ### Try it out
 
-The dev console will print a `localhost` URL you can use to access the app. Open it by clicking the URL in the dev console or access it by tapping this link -> http://localhost:30000 and cast your vote!
+In under 2 minutes, the dev console will print a `localhost` URL you can use to access the app. Open it by clicking the URL in the dev console or access it by tapping this link -> http://localhost:30000 and cast your vote!
 
 ![vote UI](https://github.com/garden-io/quickstart-example/assets/59834693/f120848a-7467-40f8-840c-791b7b4a8fb2)
 
@@ -96,11 +90,12 @@ exit
 
 Now that you have Garden installed and seen its basic capabilities it's time to take the next steps.
 
-If you'd like to better understand how a Garden project is configured, we recommend going
-through our [first project tutorial](https://docs.garden.io/tutorials/your-first-project) which walks you through configuring a Garden project step-by-step.
+Join our [community on Discord](https://go.garden.io/discord) 🧑‍🤝‍🧑
 
-If you like to dive right in and configure your own project for Garden, we recommend referencing our [example
-projects on GitHub](https://github.com/garden-io/garden/tree/main/examples) and the section of our docs titled [Using Garden](https://docs.garden.io/using-garden/configuration-overview), which covers all parts of Garden in detail.
+If you'd like to better understand how a Garden project is configured, we recommend going
+through our [first project tutorial](https://docs.garden.io/tutorials/your-first-project) which walks you through configuring a Garden project step-by-step. 🐾
+
+If you like to dive right in and configure your own project for Garden, we recommend referencing our [example projects on GitHub](https://github.com/garden-io/garden/tree/main/examples) and the section of our docs titled [Using Garden](https://docs.garden.io/using-garden/configuration-overview), which covers all parts of Garden in detail. 🕵
 
 
 If you have any questions or feedback—or just want to say hi 🙂—we encourage you to join our [Discord community](https://go.garden.io/discord)!
