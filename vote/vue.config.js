@@ -5,7 +5,7 @@ module.exports = {
     progress: false,
     proxy: {
       '^/api': {
-        target: 'http://api',
+        target: `http://limiter`, // limiter is a rate limiting reverse proxy for the api
         changeOrigin: true,
         secure: false,
         logLevel: 'debug',

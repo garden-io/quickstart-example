@@ -68,3 +68,6 @@ typings/
 # IDEs
 .vscode
 .history
+
+# macOS
+.DS_Store
