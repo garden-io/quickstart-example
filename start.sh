@@ -1,13 +1,18 @@
 #!/bin/bash
 
-set -e
+set -euxo pipefail
 
 # Install rsync if it's not already installed
 command -v rsync &> /dev/null || sudo apt-get install -y rsync
 
+command -v jq &> /dev/null || sudo apt-get install -y jq
+
 # Install Garden if it's not already installed
-command -v garden &> /dev/null || (curl -sSL https://github.com/garden-io/garden/releases/latest/download/garden-0.13.7-linux-amd64.tar.gz | tar xz && \
-sudo mv linux-amd64/* /usr/local/bin)
+command -v garden &> /dev/null || (
+  ASSET_URL=$(curl -s https://api.github.com/repos/garden-io/garden/releases/latest | \
+    jq -r '.assets[] | select(.browser_download_url | test("linux-amd64.tar.gz$")) | .browser_download_url')
+  curl -sSL $ASSET_URL | tar xz && \
+  sudo mv linux-amd64/* /usr/local/bin)
 
 # Download k3s if it's not already installed
 if [ ! -f "./k3s" ]; then
