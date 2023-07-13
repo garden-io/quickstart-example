@@ -2,9 +2,8 @@
 
 set -euxo pipefail
 
-# Install rsync if it's not already installed
+# Install required dependencies if they're not already installed
 command -v rsync &> /dev/null || sudo apt-get install -y rsync
-
 command -v jq &> /dev/null || sudo apt-get install -y jq
 
 # Install Garden if it's not already installed
@@ -16,7 +15,9 @@ command -v garden &> /dev/null || (
 
 # Download k3s if it's not already installed
 if [ ! -f "./k3s" ]; then
-    wget -O k3s https://github.com/k3s-io/k3s/releases/download/v1.27.1%2Bk3s1/k3s
+    K3S_URL=$(curl -s https://api.github.com/repos/k3s-io/k3s/releases/latest | \
+      jq -r '.assets[] | select(.browser_download_url | endswith("k3s")) | .browser_download_url')
+    curl -sSL -o k3s $K3S_URL && \
     chmod +x k3s
 else
     # Check if k3s is already running and stop it
@@ -25,7 +26,7 @@ else
     fi
 fi
 
-# Start k3s server with host Docker iamge support and Traefik ingress controller disabled
+# Start k3s server with host Docker image support and Traefik ingress controller disabled
 nohup sudo ./k3s server --docker --disable=traefik --write-kubeconfig-mode=644 --snapshotter native > /dev/null 2>&1 &
 
 # Copy k3s config to user's home directory
