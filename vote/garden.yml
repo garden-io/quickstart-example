@@ -30,10 +30,11 @@ spec:
       hostname: vote.${var.base-hostname}
   env:
     HOSTNAME: vote.${var.base-hostname}
-    VUE_APP_USERNAME: ${local.username}
+    VITE_USERNAME: ${local.username}
 dependencies:
   - deploy.api
   - deploy.result
+  - deploy.worker
 
 ---
 kind: Test

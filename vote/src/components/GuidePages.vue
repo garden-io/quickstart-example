@@ -11,8 +11,8 @@
         It contains a handful of services, a message queue, and a database.
         <br />
         <br />
-        When you ran <Code text="garden dev" /> followed by the
-        <Code text="deploy --sync" /> command, Garden <span class="bold">built</span> the entire
+        When you ran <CodeBlock text="garden dev" /> followed by the
+        <CodeBlock text="deploy --sync" /> command, Garden <span class="bold">built</span> the entire
         project, <span class="bold">deployed</span> the services,
         <span class="bold">ran a task</span> to intialize the database, and turned on
         <span class="bold">hot reloading</span> (i.e. live code sync).
@@ -24,14 +24,14 @@
     <div v-if="currentPageName === 'hotReloading1'">
       <h1>Hot reloading I</h1>
       <p>
-        When you run the <Code text="deploy --sync" /> command, hot reloading is enabled by default.
+        When you run the <CodeBlock text="deploy --sync" /> command, hot reloading is enabled by default.
         <br />
         <br />
         This means that changes you make to the code locally are
         <span class="bold">live synced</span> to the running services without requiring a re-build.
         <br />
         <br />
-        Try opening the <Code type="file" text="./vote/src/colors.js" /> file of the Vote micro
+        Try opening the <CodeBlock type="file" text="./vote/src/colors.js" /> file of the Vote micro
         service in your editor and changing the values.
         <br />
         <br />
@@ -53,8 +53,8 @@
         <span class="highlight">{{ serverGreeting }}</span>
         <br />
         <br />
-        Try changing the greeting in the <Code text="hello()" /> function in
-        <Code type="file" text="./api/app.py" /> and click the button again.
+        Try changing the greeting in the <CodeBlock text="hello()" /> function in
+        <CodeBlock type="file" text="./api/app.py" /> and click the button again.
         <br />
         <br />
         As before, the app updates immediately.
@@ -65,10 +65,10 @@
       <p>
         To <span class="bold">stream logs from all the micro services</span> in this project, simply
         run the following from the interactive Garden dev console:
-        <Code type="block" text="logs --follow" />
+        <CodeBlock type="block" text="logs --follow" />
         There are multiple different options for the logs command, you can run
-        <Code text="logs --help" /> to learn more. Stop following logs by turning off the log
-        monitors with <Code text="hide logs" />.
+        <CodeBlock text="logs --help" /> to learn more. Stop following logs by turning off the log
+        monitors with <CodeBlock text="hide logs" />.
         <br />
         <br />
         If you click the vote buttons belows you should see the corresponding service logs.
@@ -79,7 +79,7 @@
       <p>
         Garden treats tests as a <span class="bold">first-class citizen</span>. To run the entire
         test suite for this project, simply run:
-        <Code type="block" text="test" />
+        <CodeBlock type="block" text="test" />
         Garden also has a <span class="bold">powerful caching</span> mechanism built-in. Try running
         the test again without making any changes to the code.
         <br />
@@ -88,7 +88,7 @@
         <br />
         <br />
         (Note that running the tests may re-deploy services and thereby disable hot reloading. You
-        can re-enable it by running <Code text="deploy --sync" /> again.)
+        can re-enable it by running <CodeBlock text="deploy --sync" /> again.)
       </p>
     </div>
     <div v-if="currentPageName === 'tasks'">
@@ -97,13 +97,13 @@
         Tasks are another Garden primitive that are useful for various set-up operations.
         <br />
         <br />
-        For example, when you first ran <Code text="deploy" />, a task for initialising and seeding
+        For example, when you first ran <CodeBlock text="deploy" />, a task for initialising and seeding
         the database was executed.
         <br />
         <br />
         You can also run individual tasks directly. To reset the database to its original state,
         run:
-        <Code type="block" text="run task db-clear" />
+        <CodeBlock type="block" text="run task db-clear" />
         Notice how the votes are reset to zero?
       </p>
     </div>
@@ -114,8 +114,8 @@
         <br />
         <br />
         To shell into the API server, using a separate terminal (not the dev console), you can run:
-        <Code type="block" text="garden exec api /bin/sh" />
-        You can exit from the process by typing <Code text="exit" /> and hitting enter.
+        <CodeBlock type="block" text="garden exec api /bin/sh" />
+        You can exit from the process by typing <CodeBlock text="exit" /> and hitting enter.
       </p>
     </div>
     <div v-if="currentPageName === 'end'">
@@ -143,13 +143,14 @@
 </template>
 
 <script>
-import Code from "./Code.vue";
+import CodeBlock from "./Code.vue";
+import axios from 'axios'
 
 export default {
   name: "GuidePages",
 
   data: () => ({
-    usernameStr: process.env.VUE_APP_USERNAME ? ` ${process.env.VUE_APP_USERNAME}!` : "!",
+    usernameStr: import.meta.env.VITE_USERNAME ? ` ${import.meta.env.VITE_USERNAME}!` : "!",
     serverGreeting: "",
   }),
 
@@ -164,14 +165,14 @@ export default {
         "Access-Control-Allow-Origin": "*",
       };
       const self = this;
-      window.axios.get("/api", { headers }).then((res) => {
+      axios.get("/api", { headers }).then((res) => {
         self.serverGreeting = res.data;
       });
     },
   },
 
   components: {
-    Code,
+    CodeBlock,
   },
 };
 </script>

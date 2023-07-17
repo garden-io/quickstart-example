@@ -1,17 +1,16 @@
-import Vue from 'vue';
-import axios from 'axios';
-import io from 'socket.io-client';
-import App from './App.vue';
-import router from './router';
-import store from './store';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-Vue.config.productionTip = false;
+import App from './App.vue'
+import router from './router'
 
-window.axios = axios.create();
+import { io } from "socket.io-client";
+
 window.io = io;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')

@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { expect } = require('chai');
+import axios from 'axios'
+import { describe, expect, it } from 'vitest'
 
 describe('GET /', () => {
   it('should respond with 200', async () => {

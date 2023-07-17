@@ -35,9 +35,10 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-  name: 'Vote',
+  name: 'VoteBlock',
 
   data() {
     return {
@@ -65,7 +66,7 @@ export default {
         'Access-Control-Allow-Origin': '*',
       };
       const self = this;
-      window.axios.post('/api/vote', `vote=${this.voteResult}`, { headers }).then(() => {
+      axios.post('http://api.local.demo.garden/api/vote', `vote=${this.voteResult}`, { headers }).then(() => {
         self.counter += 1;
       });
     },
