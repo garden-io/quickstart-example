@@ -11,6 +11,13 @@ var express = require('express'),
 
 var port = process.env.PORT || 4000;
 
+const pgPool = new pg.Pool({
+  database: process.env.PGDATABASE,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  host: "postgres"
+})
+
 let cachedVotes = JSON.stringify({ a: 0, b: 0 });
 
 io.sockets.on('connection', function (socket) {
@@ -27,15 +34,10 @@ io.sockets.on('connection', function (socket) {
 async.retry(
   { times: 1000, interval: 1000 },
   function (callback) {
-    const database = process.env.PGDATABASE
-    const username = process.env.PGUSER
-    const password = process.env.PGPASSWORD
 
-    const url = `postgres://${username}:${password}@postgres/${database}`
-
-    pg.connect(url, function (err, client, done) {
+    pgPool.connect(function (err, client, done) {
       if (err) {
-        console.error("Waiting for db");
+        console.error("Waiting for db", err);
       }
       callback(err, client);
     });
