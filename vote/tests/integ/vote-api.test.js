@@ -3,7 +3,11 @@ import { describe, expect, it } from 'vitest'
 
 describe('GET /', () => {
   it('should respond with 200', async () => {
-    const result = await axios.get('http://vote', {});
+    const headers = {
+      'Accept': 'text/html'
+    }
+
+    const result = await axios.get('http://vote', { headers });
     expect(result.status).to.eql(200);
   });
 });

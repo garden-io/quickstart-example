@@ -1,11 +1,10 @@
 {
-  "name": "vote-vue3",
-  "version": "0.0.0",
+  "name": "vote",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
     "serve": "vite dev --host $GARDEN_VARIABLES_BASE_HOSTNAME --port 8080",
     "test:unit": "vitest --run tests/unit",
     "test:e2e": "vitest --run tests/integ",
@@ -13,22 +12,22 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "pinia": "^2.1.3",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.2",
     "axios": "^1.4.0",
-    "socket.io-client": "^4.7.1"
+    "pinia": "^2.1.4",
+    "socket.io-client": "^4.7.1",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.2.0",
+    "@rushstack/eslint-patch": "^1.3.2",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-prettier": "^7.1.0",
-    "@vue/test-utils": "^2.3.2",
-    "eslint": "^8.39.0",
-    "eslint-plugin-vue": "^9.11.0",
+    "@vue/test-utils": "^2.4.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-vue": "^9.15.1",
     "jsdom": "^22.1.0",
-    "prettier": "^2.8.8",
-    "vite": "^4.3.9",
-    "vitest": "^0.32.0"
+    "prettier": "^3.0.0",
+    "vite": "^4.4.4",
+    "vitest": "^0.33.0"
   }
 }
