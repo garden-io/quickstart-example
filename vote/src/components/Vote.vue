@@ -66,7 +66,7 @@ export default {
         'Access-Control-Allow-Origin': '*',
       };
       const self = this;
-      axios.post('http://api.local.demo.garden/api/vote', `vote=${this.voteResult}`, { headers }).then(() => {
+      axios.post('/api/vote', `vote=${this.voteResult}`, { headers }).then(() => {
         self.counter += 1;
       });
     },
