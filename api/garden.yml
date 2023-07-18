@@ -13,7 +13,7 @@ description: The backend deploy for the voting UI
 spec:
   args: [python, app.py]
   sync:
-    args: ["/bin/sh", "-c", "ls /app/app.py | entr -r python /app/app.py"]
+    args: ["/bin/sh", "-c", "ls /app/app.py | entr -n -r python /app/app.py"]
     paths:
       - target: /app
         mode: "one-way-replica"
