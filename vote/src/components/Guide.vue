@@ -7,7 +7,7 @@
       <GuidePages :currentPageName="pages.pageNames[pages.currentPageIdx]" />
       <div class="page-num-wrap">
         <button class="nav" v-on:click="goToPrevPage(pages)">
-          {{pages.currentPageIdx > 0 ? "<" : "&nbsp" }}
+          {{pages.currentPageIdx > 0 ? "<" : "&nbsp;" }}
         </button>
         <span>
           {{pages.currentPageIdx + 1}}/{{pages.totalPages}}
@@ -26,7 +26,7 @@ import { LOCAL_STORAGE_ITEM_PAGE } from '../constants';
 import GuidePages from './GuidePages.vue';
 
 export default {
-  name: 'Guide',
+  name: 'GuideBlock',
 
   data: () => {
     const pageNames = ['welcome', 'hotReloading1', 'hotReloading2', 'logs', 'tests', 'tasks', 'exec', 'end'];

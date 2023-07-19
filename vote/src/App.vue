@@ -1,19 +1,18 @@
-<template>
-  <div id="app">
-    <router-view/>
-  </div>
-</template>
-
-
-<script>
+<script setup>
+import { RouterView } from 'vue-router'
 
 // We store the guide page number in the local storage so that it doesn't reset
 // on hot reload events. But we also want to ensure it's set to 0 on fresh reloads.
 window.localStorage.setItem('garden-guide-page-idx', '0');
-
 </script>
 
-<style>
+<template>
+  <div id="app">
+    <RouterView />
+  </div>
+</template>
+
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

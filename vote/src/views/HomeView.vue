@@ -1,10 +1,10 @@
 <template>
   <div class='main'>
     <div class='section' id="section-test">
-      <Guide />
+      <GuideBlock />
       <div class='app'>
         <div>
-          <Vote v-bind:optionA='optionA' v-bind:optionB='optionB' />
+          <VoteBlock v-bind:optionA='optionA' v-bind:optionB='optionB' />
         </div>
         <div>
           <Results v-bind:optionA='optionA' v-bind:optionB='optionB' />
@@ -18,13 +18,13 @@
 
 <script>
 
-import Vote from '../components/Vote.vue';
+import VoteBlock from '../components/Vote.vue';
 import Results from '../components/Results.vue';
-import Guide from '../components/Guide.vue';
+import GuideBlock from '../components/Guide.vue';
 import colors from '../colors';
 
 export default {
-  name: 'home',
+  name: 'HomeView',
 
   data: () => ({
     optionA: {
@@ -38,8 +38,8 @@ export default {
   }),
 
   components: {
-    Guide,
-    Vote,
+    GuideBlock,
+    VoteBlock,
     Results,
   },
 };

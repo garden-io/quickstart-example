@@ -3,19 +3,21 @@
     <div v-bind:style="{ backgroundColor: optionA.color, height: aPercent + '%' }">
       <div>
         <h2>{{aPercent}}%</h2>
-        <p>({{ a }} votes)</p>
+        <p>({{ aCount }} votes)</p>
       </div>
     </div>
     <div v-bind:style="{ backgroundColor: optionB.color, height: bPercent + '%' }">
       <div>
         <h2>{{bPercent}}%</h2>
-        <p>({{ b }} votes)</p>
+        <p>({{ bCount }} votes)</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { state } from "@/socket";
+
 const results = {
   name: 'Results',
 
@@ -32,57 +34,30 @@ const results = {
 
   data() {
     return {
-      a: 0,
-      b: 0,
     };
   },
-
-  created() {
-    console.log('Results component created');
-
-    const socket = window.io.connect();
-
-    socket.on('scores', (json) => {
-      const data = JSON.parse(json);
-      const a = parseInt(data.a || 0, 10);
-      const b = parseInt(data.b || 0, 10);
-
-      this.updateScores({ a, b });
-    });
-
-    socket.on('connect_error', (err) => {
-      console.log('Error on socket connection:');
-      console.log(err);
-    });
-
-    socket.on('connect', () => {
-      console.log('Connected to results endpoint');
-    });
-  },
-
   computed: {
     aPercent() {
-      if (this.a + this.b <= 0) {
+      if (state.votes.a + state.votes.b <= 0) {
         return 50;
       }
-      return Math.round(this.a / (this.a + this.b) * 100);
+      return Math.round(state.votes.a / (state.votes.a + state.votes.b) * 100);
     },
     bPercent() {
-      if (this.a + this.b <= 0) {
+      if (state.votes.a + state.votes.b <= 0) {
         return 50;
       }
-      return 100 - Math.round(this.a / (this.a + this.b) * 100);
+      return 100 - Math.round(state.votes.a / (state.votes.a + state.votes.b) * 100);
     },
+    aCount() {
+      return state.votes.a
+    },
+    bCount() {
+      return state.votes.b
+    }
   },
 
   methods: {
-    updateScores({ a, b }) {
-      if (a !== this.a || b !== this.b) {
-        console.log(`Setting scores: a=${a} b=${b}`);
-        this.a = a;
-        this.b = b;
-      }
-    },
   },
 };
 export default results;

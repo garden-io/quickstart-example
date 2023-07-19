@@ -1,10 +1,10 @@
-import { expect } from 'chai';
-import { shallowMount } from '@vue/test-utils';
-import Vote from '../../src/components/Vote.vue';
+import { describe, it, expect } from 'vitest'
+import { shallowMount } from '@vue/test-utils'
+import VoteBlock from '../../src/components/Vote.vue'
 
 describe('Vote.vue', () => {
   it('renders props.msg when passed', () => {
-    const wrapper = shallowMount(Vote, {
+    const wrapper = shallowMount(VoteBlock, {
       propsData: {
         optionA: {
           name: 'flowers',
