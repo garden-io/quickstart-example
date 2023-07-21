@@ -17,10 +17,6 @@ spec:
     paths:
       - target: /app
         exclude: [node_modules]
-  ingresses:
-    - path: /
-      port: ui
-      hostname: result.${var.base-hostname}
   ports:
     - name: ui
       protocol: TCP
