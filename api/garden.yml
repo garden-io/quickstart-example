@@ -24,9 +24,9 @@ spec:
       containerPort: 8080
       servicePort: 80
   ingresses:
-    - path: /
+    - path: /api
       port: http
-      hostname: api.${variables.base-hostname}
+      hostname: "api.${var.base-hostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
   healthCheck:
     httpGet:
       path: /health
