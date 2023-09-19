@@ -27,9 +27,9 @@ spec:
   ingresses:
     - path: /
       port: http
-      hostname: vote.${var.base-hostname}
+      hostname: "vote.${var.base-hostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
   env:
-    HOSTNAME: vote.${var.base-hostname}
+    HOSTNAME: "vote.${var.base-hostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
     VITE_USERNAME: ${local.username}
 dependencies:
   - deploy.api

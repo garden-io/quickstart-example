@@ -1,7 +1,7 @@
 apiVersion: garden.io/v1
 kind: Project
 name: vote-demo-quickstart
-defaultEnvironment: local
+defaultEnvironment: ephemeral
 dotIgnoreFile: .gitignore
 
 variables:
@@ -21,12 +21,15 @@ environments:
     defaultNamespace: ${var.user-namespace}
     variables:
       base-hostname: "<add you values here>"
+  - name: ephemeral
 
 providers:
   - name: local-kubernetes
     environments: [local]
     namespace: ${environment.namespace}
     defaultHostname: ${var.base-hostname}
+  - name: ephemeral-kubernetes
+    environments: [ephemeral]
 
   # You can use Garden with remote Kubernetes clusters as well. In fact, that's where it shines!
   # Please see our docs on using the (remote) Kubernetes plugin to learn how to configure
