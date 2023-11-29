@@ -1,10 +1,17 @@
 kind: Deploy
-type: container
 name: redis
-description: Redis service for queueing votes before they are aggregated
+type: helm
+description: Deploy a Redis service for queueing votes before they are aggregated
+
 spec:
-  image: redis:alpine
-  ports:
-    - name: redis
-      protocol: TCP
-      containerPort: 6379
+  chart:
+    name: redis
+    repo: https://charts.bitnami.com/bitnami
+    version: "17.13.2"
+  values:
+    auth:
+      enabled: false
+    master:
+      persistence:
+        enabled: false
+    architecture: standalone

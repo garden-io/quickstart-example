@@ -9,7 +9,7 @@ import java.util.Properties;
 class Worker {
   public static void main(String[] args) {
     try {
-      Jedis redis = connectToRedis("redis");
+      Jedis redis = connectToRedis("redis-master");
       Connection dbConn = connectToDB("postgres");
 
       System.err.println("Watching vote queue");
