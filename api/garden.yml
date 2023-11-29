@@ -1,44 +1,46 @@
----
 kind: Build
+name: api
 type: container
-name: api-build
-description: The backend build for the voting UI
+description: Build the vote API
 
 ---
 kind: Deploy
-type: container
 name: api
-build: api-build
-description: The backend deploy for the voting UI
+type: kubernetes
+description: Deploy the vote API
+dependencies: [build.api, deploy.redis]
+
+variables:
+  hostname: api.${var.baseHostname || providers.ephemeral-kubernetes.outputs.default-hostname}
+
 spec:
-  args: [python, app.py]
+  # Variables such as container image are set via Garden template strings
+  # in the manifests themselves. Variables can also be set in the Garden config to ensure the manifests
+  # remain valid K8s manifests. Learn more at: https://docs.garden.io/kubernetes-plugins/action-types/kubernetes
+  files: [./manifests/*]
+
+  # This tells Garden what "target" to use for logs, code syncing and more
+  defaultTarget:
+    kind: Deployment
+    name: api
+
   sync:
-    args: ["/bin/sh", "-c", "ls /app/app.py | entr -n -r python /app/app.py"]
     paths:
-      - target: /app
+      - sourcePath: .
+        containerPath: /app
         mode: "one-way-replica"
         exclude: [.venv]
-  ports:
-    - name: http
-      protocol: TCP
-      containerPort: 8080
-      servicePort: 80
-  ingresses:
-    - path: /api
-      port: http
-      hostname: "api.${var.base-hostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
-  healthCheck:
-    httpGet:
-      path: /health
-      port: http
-dependencies:
-  - deploy.redis
+    overrides:
+      # Use entr to restart server on file changes in sync mode
+      - args: ["/bin/sh", "-c", "ls /app/app.py | entr -n -r python /app/app.py"]
 
 ---
 kind: Test
-type: container
 name: unit
-description: Unit test for backend API
-build: api-build
+type: container
+description: Unit test the vote API
+dependencies: [build.api]
+
 spec:
+  image: ${actions.build.api.outputs.deploymentImageId}
   args: ["echo", "ok"]
