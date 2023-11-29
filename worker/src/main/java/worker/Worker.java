@@ -31,7 +31,7 @@ class Worker {
       String voterID = voteData.getString("voter_id");
       String vote = voteData.getString("vote");
 
-      System.err.printf("Processing vote for '%s' by '%s'\n", vote, voterID);
+      System.err.printf("Processing vote with ID '%s' and pushing to DB\n", voterID);
       updateVote(dbConn, voterID, vote);
     } catch (Exception e) {
       System.err.printf("Error when processing vote from queue");

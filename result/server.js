@@ -56,7 +56,7 @@ function getVotes(client) {
     } else {
       const votes = JSON.stringify(collectVotesFromResult(result));
       if (votes !== cachedVotes) {
-        console.log("Got updated votes", votes);
+        console.log(`Got updated votes from DB: ${votes}, sending to client`);
         cachedVotes = votes
       }
       io.sockets.emit("scores", votes);
