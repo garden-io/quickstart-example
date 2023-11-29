@@ -1,19 +1,23 @@
----
 kind: Build
 name: worker
 type: container
+description: Build the worker image
 
 ---
 kind: Deploy
-description: The worker that collects votes and stores results in a postgres table
+description: Deploy the worker that collects votes and stores results in a postgres table
+# Here we're using the container type which means Garden will generate the manifests.
+# We generally recommend using the 'kubernetes' or 'helm' types if you already have manifests
+# or charts at hand but the 'container' type can be a good way to get started quickly if you don't.
+# You can learn more about the Kubernetes action types here: https://docs.garden.io/kubernetes-plugins/action-types
 type: container
 name: worker
 build: worker
 spec:
   env:
-    PGDATABASE: ${var.postgres-database}
-    PGUSER: ${var.postgres-username}
-    PGPASSWORD: ${var.postgres-password}
+    PGDATABASE: ${var.postgresDatabase}
+    PGUSER: ${var.postgresUsername}
+    PGPASSWORD: ${var.postgresPassword}
 dependencies:
   - deploy.redis
   - run.db-init

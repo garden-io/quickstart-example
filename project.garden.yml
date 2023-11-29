@@ -5,46 +5,47 @@ defaultEnvironment: ephemeral
 dotIgnoreFile: .gitignore
 
 variables:
-  postgres-username: postgres
-  postgres-database: postgres
-  postgres-password: postgres
+  postgresUsername: postgres
+  postgresDatabase: postgres
+  postgresPassword: postgres
 
   # Replace underscores as Kubernetes namespaces do not allow them.
-  user-namespace: vote-demo-quickstart-${kebabCase(local.username)}
+  userNamespace: vote-demo-quickstart-${kebabCase(local.username)}
 
 environments:
   - name: local
-    defaultNamespace: ${var.user-namespace}
+    defaultNamespace: ${var.userNamespace}
     variables:
-      base-hostname: local.demo.garden
+      baseHostname: local.demo.garden
   - name: remote
-    defaultNamespace: ${var.user-namespace}
+    defaultNamespace: ${var.userNamespace}
     variables:
-      base-hostname: "<add you values here>"
+      baseHostname: "<add you values here>"
+      imagePullSecretName: "<add you values here>"
   - name: ephemeral
 
 providers:
   - name: local-kubernetes
     environments: [local]
     namespace: ${environment.namespace}
-    defaultHostname: ${var.base-hostname}
+    defaultHostname: ${var.baseHostname}
   - name: ephemeral-kubernetes
     environments: [ephemeral]
 
   # You can use Garden with remote Kubernetes clusters as well. In fact, that's where it shines!
-  # Please see our docs on using the (remote) Kubernetes plugin to learn how to configure
-  # the values below.
+  # Please see our docs on using the remote Kubernetes plugin to learn how to configure
+  # the values below: https://docs.garden.io/kubernetes-plugins/remote-k8s
   - name: kubernetes
     environments: [remote]
     context: "<add your values>"
     ingressClass: "nginx"
     buildMode: cluster-buildkit
     imagePullSecrets:
-      - name: "<add your values>"
+      - name: ${var.imagePullSecretName}
         namespace: default
     deploymentRegistry:
       hostname: "<add your values>"
       namespace: "<add your values>"
     namespace: ${environment.namespace}
-    defaultHostname: ${var.base-hostname}
+    defaultHostname: ${var.baseHostname}
 
