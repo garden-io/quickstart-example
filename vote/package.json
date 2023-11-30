@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run serve",
     "build": "vite build",
     "serve": "vite dev --host $GARDEN_VARIABLES_BASE_HOSTNAME --port 8080",
     "test:unit": "vitest --run tests/unit",

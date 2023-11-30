@@ -1,15 +1,13 @@
-var express = require('express'),
-  async = require('async'),
-  path = require("path")
-  pg = require("pg"),
-  cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  methodOverride = require('method-override'),
-  app = express(),
-  server = require('http').Server(app),
-  io = require('socket.io')(server);
+const express = require('express')
+const async = require('async')
+const pg = require("pg")
+const cookieParser = require('cookie-parser')
+const methodOverride = require('method-override')
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
-var port = process.env.PORT || 4000;
+const port = process.env.PORT || 8080
 
 const pgPool = new pg.Pool({
   database: process.env.PGDATABASE,
@@ -58,7 +56,7 @@ function getVotes(client) {
     } else {
       const votes = JSON.stringify(collectVotesFromResult(result));
       if (votes !== cachedVotes) {
-        console.log("Got updated votes", votes);
+        console.log(`Got updated votes from DB: ${votes}, sending to client`);
         cachedVotes = votes
       }
       io.sockets.emit("scores", votes);
@@ -69,7 +67,7 @@ function getVotes(client) {
 }
 
 function collectVotesFromResult(result) {
-  var votes = { a: 0, b: 0 };
+  const votes = { a: 0, b: 0 };
 
   result.rows.forEach(function (row) {
     votes[row.vote] = parseInt(row.count);
@@ -79,7 +77,6 @@ function collectVotesFromResult(result) {
 }
 
 app.use(cookieParser());
-app.use(bodyParser());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -88,17 +85,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(express.static('views'));
-// app.use(express.static(__dirname + '/result/views'));
-
-// app.use('/result', express.static(__dirname + '/views'));
-
-// app.get('/result', function (req, res) {
-app.get('/', function (req, res) {
-  res.sendFile(path.resolve(__dirname + '/views/index.html'));
+app.get('/health', function (_req, res) {
+  res.sendStatus(200);
 });
 
 server.listen(port, function () {
-  var port = server.address().port;
   console.log('App running on port ' + port);
 });

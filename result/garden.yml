@@ -1,38 +1,41 @@
 kind: Build
-type: container
 name: result
+type: container
+description: Build the result websocket server
 
 ---
 kind: Deploy
-description: Deploy results service
-type: container
 name: result
-build: result
-dependencies:
-  - run.db-init
+type: kubernetes
+description: Deploy the result websocket server
+dependencies: [build.result, run.db-init]
+
 spec:
-  replicas: 1
-  args: [nodemon, server.js]
+  # Variables such as container image are set via Garden template strings
+  # in the manifests themselves. Variables can also be set in the Garden config to ensure the manifests
+  # remain valid K8s manifests. Learn more at: https://docs.garden.io/kubernetes-plugins/action-types/kubernetes
+  files: [./manifests/*]
+
+  # This tells Garden what "target" to use for logs, code syncing and more
+  defaultTarget:
+    kind: Deployment
+    name: result
+
   sync:
     paths:
-      - target: /app
+      - sourcePath: .
+        containerPath: /app
         exclude: [node_modules]
-  ports:
-    - name: ui
-      protocol: TCP
-      containerPort: 8080
-      servicePort: 80
-  env:
-    PGDATABASE: ${var.postgres-database}
-    PGUSER: ${var.postgres-username}
-    PGPASSWORD: ${var.postgres-password}
+    overrides:
+      - args: [nodemon, server.js]
 
 ---
 kind: Test
-name: e2e
-description: Test results service
+name: result-integ
 type: container
-build: result
-dependencies: [run.db-init]
+description: Test results handler
+dependencies: [build.result, run.db-init]
+
 spec:
+  image: ${actions.build.result.outputs.deploymentImageId}
   args: [echo, ok]

@@ -22,7 +22,7 @@ CORS(app)
 
 def get_redis():
     if not hasattr(g, 'redis'):
-        g.redis = Redis(host="redis", db=0, socket_timeout=5)
+        g.redis = Redis(host="redis-master", db=0, socket_timeout=5)
     return g.redis
 
 @app.route("/health", methods=['GET'])
@@ -46,7 +46,7 @@ def vote():
         redis = get_redis()
         vote = request.form['vote']
         data = json.dumps({'voter_id': voter_id, 'vote': vote})
-        print("received vote request for '%s' from voter id: '%s'" % (vote, voter_id))
+        print("Received vote request for '%s', pushing to Redis queue with ID '%s'" % (vote, voter_id))
         sys.stdout.flush()
 
         redis.rpush('votes', data)
@@ -56,7 +56,7 @@ def vote():
             mimetype='application/json'
         )
     else:
-        print("received invalid request")
+        print("Received invalid request")
         sys.stdout.flush()
         return app.response_class(
             response=json.dumps({}),

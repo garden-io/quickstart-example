@@ -1,50 +1,61 @@
 kind: Deploy
-description: Postgres container for storing voting results
-type: container
-name: postgres
+name: db
+type: helm
+description: Deploy a Postgres database for storing voting results
+
 spec:
-  image: postgres:11.7-alpine
-  volumes:
-    - name: data
-      containerPath: /db-data
-  ports:
-    - name: postgres
-      containerPort: 5432
-  env:
-    POSTGRES_DATABASE: ${var.postgres-database}
-    POSTGRES_USERNAME: ${var.postgres-username}
-    POSTGRES_PASSWORD: ${var.postgres-password}
-  healthCheck:
-    command: [psql, -w, -U, "${var.postgres-username}", -d, "${var.postgres-database}", -c, "SELECT 1"]
+  chart:
+    name: postgresql
+    repo: https://charts.bitnami.com/bitnami
+    version: 12.6.6
+  values:
+    # This is a more digestable name than the default one in the template
+    fullnameOverride: postgres
+    auth:
+      username: ${var.postgresUsername}
+      database: ${var.postgresDatabase}
+      postgresPassword: ${var.postgresPassword}
+    # Avoid some late startup flakiness
+    primary:
+      readinessProbe:
+        successThreshold: 3 # Raised from a default of 1
+      persistence:
+        enabled: false
+
 ---
 kind: Run
 name: db-init
-type: container
-dependencies: [deploy.postgres]
+type: kubernetes-exec
+
+dependencies:
+  - deploy.db
+
 spec:
-  image: postgres:11.7-alpine
-  command: [/bin/sh, -c]
-  # The postgres health check appears to go through before the server accepts remote connections, so we need to
-  # sleep for a while.
-  # https://github.com/CrunchyData/crunchy-containers/issues/653
-  args:
+  resource:
+    kind: "StatefulSet"
+    name: "postgres"
+  command:
     [
-      "sleep 15 && psql -w -U ${var.postgres-username} --host=postgres --port=5432 -d ${var.postgres-database} -c 'CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL, created_at timestamp default NULL)'",
+      "bin/sh",
+      "-c",
+      "sleep 15 && PGPASSWORD=${var.postgresPassword} psql -w -U ${var.postgresUsername} --host=postgres --port=5432 -d ${var.postgresDatabase} -c 'CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL, created_at timestamp default NULL)'",
     ]
-  env:
-    PGDATABASE: ${var.postgres-database}
-    PGUSER: ${var.postgres-username}
-    PGPASSWORD: ${var.postgres-password}
+
 ---
 kind: Run
 name: db-clear
-type: container
-dependencies: [deploy.postgres]
+type: kubernetes-exec
+
+dependencies:
+  - deploy.db
+
 spec:
-  image: postgres:11.7-alpine
-  command: [/bin/sh, -c]
-  args: ["psql -w -U ${var.postgres-username} --host=postgres --port=5432 -d ${var.postgres-database} -c 'TRUNCATE votes'"]
-  env:
-    PGDATABASE: ${var.postgres-database}
-    PGUSER: ${var.postgres-username}
-    PGPASSWORD: ${var.postgres-password}
+  resource:
+    kind: "StatefulSet"
+    name: "postgres"
+  command:
+    [
+      "bin/sh",
+      "-c",
+      "PGPASSWORD=${var.postgresPassword} psql -w -U ${var.postgresUsername} --host postgres --port=5432 -d ${var.postgresDatabase} -c 'TRUNCATE votes'",
+    ]

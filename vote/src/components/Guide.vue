@@ -29,7 +29,7 @@ export default {
   name: 'GuideBlock',
 
   data: () => {
-    const pageNames = ['welcome', 'hotReloading1', 'hotReloading2', 'logs', 'tests', 'tasks', 'exec', 'end'];
+    const pageNames = ['welcome', 'hotReloading1', 'hotReloading2', 'logs', 'tests', 'run-actions', 'exec', 'end'];
     const currentPageIdx = parseInt(window.localStorage.getItem(LOCAL_STORAGE_ITEM_PAGE), 10) || 0;
     return {
       hidden: false,

@@ -1,47 +1,50 @@
 kind: Build
 name: vote
 type: container
-include: [.]
+description: Build the vote UI
 
 ---
 kind: Deploy
-type: container
 name: vote
-build: vote
-description: The voting UI
-spec:
-  sync:
-    paths:
-      - target: /app/src
-        source: src
-        mode: one-way-replica
-        exclude: [node_modules]
-  ports:
-    - name: http
-      containerPort: 8080
-      servicePort: 80
-  healthCheck:
-    httpGet:
-      path: /
-      port: http
-  ingresses:
-    - path: /
-      port: http
-      hostname: "vote.${var.base-hostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
-  env:
-    HOSTNAME: "vote.${var.base-hostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
-    VITE_USERNAME: ${local.username}
+type: kubernetes
+description: Deploy the vote UI
 dependencies:
+  - build.vote
   - deploy.api
   - deploy.result
   - deploy.worker
 
+variables:
+  hostname: "vote.${var.baseHostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
+
+spec:
+  # Variables such as container image are set via Garden template strings
+  # in the manifests themselves. Variables can also be set in the Garden config to ensure the manifests
+  # remain valid K8s manifests. Learn more at: https://docs.garden.io/kubernetes-plugins/action-types/kubernetes
+  files: [./manifests/*]
+
+  # This tells Garden what "target" to use for logs, code syncing and more
+  defaultTarget:
+    kind: Deployment
+    name: vote
+
+  sync:
+    paths:
+      - sourcePath: src
+        containerPath: /app/src
+        mode: one-way-replica
+        exclude: [node_modules]
+    overrides:
+      - args: [npm, run, dev]
+
 ---
 kind: Test
-type: container
 name: unit-vote
-build: vote
+type: container
+dependencies: [build.vote]
+
 spec:
+  image: ${actions.build.vote.outputs.deploymentImageId}
   args: [npm, run, test:unit]
 
 # E2E Runner configs
@@ -51,17 +54,11 @@ name: e2e-runner
 type: container
 
 ---
-kind: Deploy
-type: container
-name: e2e-runner
-dependencies: [deploy.vote]
-build: vote
-
----
 kind: Test
-type: container
 name: e2e-vote
-build: e2e-runner
-dependencies: [deploy.vote]
+type: container
+dependencies: [build.e2e-runner, deploy.vote]
+
 spec:
+  image: ${actions.build.e2e-runner.outputs.deploymentImageId}
   args: [npm, run, test:e2e]

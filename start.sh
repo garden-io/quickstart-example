@@ -35,15 +35,15 @@ sleep 5
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 
 # Do not install NGINX ingress controller
-sed -i 's/\(providers:\)/\1\n  - name: local-kubernetes\n    environments: [local]\n    namespace: ${environment.namespace}\n    defaultHostname: ${var.base-hostname}\n    setupIngressController: null/' project.garden.yml
+sed -i 's/\(providers:\)/\1\n  - name: local-kubernetes\n    environments: [local]\n    namespace: ${environment.namespace}\n    defaultHostname: ${var.baseHostname}\n    setupIngressController: null/' project.garden.yml
 
 # Update the garden.yml file for the vote container
 sed -i 's/servicePort: 80/nodePort: 30000/' vote/garden.yml
-sed -i 's/vote.${var.base-hostname}/http:\/\/localhost:30000/' vote/garden.yml
+sed -i 's/vote.${var.baseHostname}/http:\/\/localhost:30000/' vote/garden.yml
 sed -i 's/hostname:/linkUrl:/' vote/garden.yml
 
 # Remove ingress blocks from result and api containers
-sed -i '/ingresses:/, /hostname: result.\${var.base-hostname}/d' api/garden.yml result/garden.yml
+sed -i '/ingresses:/, /hostname: result.\${var.baseHostname}/d' api/garden.yml result/garden.yml
 
 # Exit with a success code
 exit 0
