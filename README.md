@@ -6,7 +6,7 @@
   </picture>
 </p>
 <div align="center">
-  <a href="https://garden.io/?utm_source=github-quikstart">Website</a>
+  <a href="https://garden.io/?utm_source=github-quickstart">Website</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://docs.garden.io/?utm_source=github-quickstart">Docs</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
