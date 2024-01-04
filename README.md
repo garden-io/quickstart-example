@@ -19,7 +19,7 @@
 
 ## Welcome to Garden's Quickstart Example 👋
 
-This repository contains the Garden Quickstart example. Please see our [Quickstart Guide](https://docs.garden.io/basics/quickstart) for step-by-step instructions on how to deploy this project. If you see any issues or bugs, kindly report them
+This repository contains the Garden Quickstart example. Please see our [Quickstart Guide](https://docs.garden.io/getting-started/quickstart) for step-by-step instructions on how to deploy this project. If you see any issues or bugs, kindly report them
 to the [main Garden repo](https://github.com/garden-io/garden/issues/new).
 
 ![Deploying the quickstart example](https://github.com/garden-io/quickstart-example/assets/5373776/5bde4656-0c6f-4ace-ad17-7f5feb4d9c23)
@@ -65,4 +65,4 @@ Finally the `worker` service is built and deployed via the `container` Build and
 manifests for you when using the `container` Deploy action which is useful for getting started quickly if you don't have those already—
 but in general we recommend using your existing charts or manifests with Garden.
 
-You can learn more about the Kubernetes action types [in our docs](https://docs.garden.io/kubernetes-plugins/action-types).
+You can learn more about the Kubernetes action types [in our docs](https://docs.garden.io/kubernetes-plugins/actions).
