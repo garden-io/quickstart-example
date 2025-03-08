@@ -36,7 +36,7 @@ it's of mixed quality :)
 
 ### Garden Plugins
 
-In this example we use the `ephmeral-kubernetes` plugin to deploy the project to a zero-config, ephemeral, Garden managed cluster that's spun up on-demand.
+In this example we use the `ephemeral-kubernetes` plugin to deploy the project to a zero-config, ephemeral, Garden managed cluster that's spun up on-demand.
 It's the quickest way to get started with Garden and this is the "quickstart" example after all.
 
 If you'd rather deploy it to your own cluster, you can update the values in
