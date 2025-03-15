@@ -5,13 +5,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: ${var.hostname}
-    http:
-      paths:
-      - backend:
-          service:
-            name: vote
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
+    - host: vote
+      http:
+        paths:
+          - backend:
+              service:
+                name: vote
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix

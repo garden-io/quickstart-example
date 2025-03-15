@@ -13,47 +13,40 @@ spec:
         app: result
     spec:
       containers:
-      - name: result
-        image: ${actions.build.result.outputs.deploymentImageId}
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: PGDATABASE
-            value: ${var.postgresDatabase}
-          - name: PGUSER
-            value: ${var.postgresUsername}
-          - name: PGPASSWORD
-            value: ${var.postgresPassword}
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /health
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 90
-          periodSeconds: 5
-          successThreshold: 1
-          timeoutSeconds: 3
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 90
-          httpGet:
-            path: /health
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 2
-          periodSeconds: 1
-          successThreshold: 2
-          timeoutSeconds: 3
-        resources:
-          limits:
-            memory: 300Mi
-          requests:
-            cpu: 10m
-            memory: 90Mi
-        securityContext:
-          allowPrivilegeEscalation: false
+        - name: result
+          image: result
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 90
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 1
+            successThreshold: 2
+            timeoutSeconds: 3
+          resources:
+            limits:
+              memory: 300Mi
+            requests:
+              cpu: 10m
+              memory: 90Mi
+          securityContext:
+            allowPrivilegeEscalation: false
       imagePullSecrets:
-      - name: ${var.imagePullSecretName || '<empty>'}
+        - name: regcred

@@ -7,16 +7,17 @@
         quickstart example project.
         <br />
         <br />
-        This example is a voting application made to resemble a typical micro service architecture.
+        This example is a voting application made to resemble a typical microservice architecture.
         It contains a handful of services, a message queue, and a database.
         <br />
         <br />
         When you ran the <CodeBlock text="deploy --sync" /> command, 
         Garden <span class="bold">built</span> the entire
-        project, <span class="bold">deployed</span> the services,
+        project with its blazing fast Remote Container Builder,
+        <span class="bold">deployed</span> the services,
         <span class="bold">ran an action</span> to intialize the database, and turned on
         <span class="bold">hot reloading</span> (i.e. live code sync). You can view the
-        results in the <a target="_blank" href="https://app.garden.io">Garden web dashboard</a>.
+        results in the <a target="_blank" href="https://app.garden.io">Garden Cloud</a>.
         <br />
         <br />
         Try voting by clicking the buttons below.
@@ -32,8 +33,8 @@
         <span class="bold">live synced</span> to the running services without requiring a re-build.
         <br />
         <br />
-        Try opening the <CodeBlock type="file" text="./vote/src/colors.js" /> file of the Vote micro
-        service in your editor and changing the values.
+        Try opening the <CodeBlock type="file" text="./vote/src/colors.js" /> file of the Vote microservice
+        in your editor and changing the values.
         <br />
         <br />
         Notice how the app updates immediately?
@@ -42,7 +43,7 @@
     <div v-if="currentPageName === 'hotReloading2'">
       <h1>Hot reloading II</h1>
       <p>
-        Hot reloading is also enabled for the API service, which is a separate micro service running
+        Hot reloading is also enabled for the API service, which is a separate microservice running
         in a separate Pod in your Kubernetes cluster.
         <br />
         <br />
@@ -64,7 +65,7 @@
     <div v-if="currentPageName === 'logs'">
       <h1>Logs</h1>
       <p>
-        To <span class="bold">stream logs from all the micro services</span> in this project you can run the <CodeBlock text="logs --follow" :showCopyBtn=true /> command from the dev console.
+        To <span class="bold">stream logs from all the microservices</span> in this project you can run the <CodeBlock text="logs --follow" :showCopyBtn=true /> command from the dev console.
         <br />
         <br />
         There are multiple different options for the logs command and you can run
@@ -140,7 +141,7 @@
         <br />
         <br />
         And if you really want to amplify your Garden experience and get expert help in getting
-        started, check out our <a href="https://garden.io/plans">Garden Enterprise offering</a>.
+        started, check out our <a href="https://garden.io/plans">Garden commercial tiers</a>.
       </p>
     </div>
   </div>

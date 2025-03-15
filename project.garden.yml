@@ -1,7 +1,7 @@
-apiVersion: garden.io/v1
+apiVersion: garden.io/v2
 kind: Project
-name: vote-demo-quickstart
-defaultEnvironment: ephemeral
+name: garden-quickstart
+defaultEnvironment: local
 dotIgnoreFile: .gitignore
 
 variables:
@@ -10,7 +10,7 @@ variables:
   postgresPassword: postgres
 
   # Replace underscores as Kubernetes namespaces do not allow them.
-  userNamespace: vote-demo-quickstart-${kebabCase(local.username)}
+  userNamespace: garden-quickstart-${kebabCase(local.username)}
 
 environments:
   - name: local
@@ -22,23 +22,24 @@ environments:
     variables:
       baseHostname: "<add you values here>"
       imagePullSecretName: "<add you values here>"
-  - name: ephemeral
 
 providers:
+  - name: container
+    gardenContainerBuilder:
+      enabled: true
+
   - name: local-kubernetes
     environments: [local]
     namespace: ${environment.namespace}
     defaultHostname: ${var.baseHostname}
-  - name: ephemeral-kubernetes
-    environments: [ephemeral]
 
   # You can use Garden with your own remote Kubernetes clusters as well.
   # Please see our docs to learn how to configure the values below: https://docs.garden.io/kubernetes-plugins/remote-k8s
   - name: kubernetes
     environments: [remote]
     context: "<add your values>"
-    ingressClass: "nginx"
-    buildMode: cluster-buildkit
+    ingressClass: "nginx" # <--- Update this as needed
+    buildMode: local-docker
     imagePullSecrets:
       - name: ${var.imagePullSecretName}
         namespace: default
@@ -47,4 +48,3 @@ providers:
       namespace: "<add your values>"
     namespace: ${environment.namespace}
     defaultHostname: ${var.baseHostname}
-

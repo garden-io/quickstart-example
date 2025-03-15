@@ -5,19 +5,36 @@ description: Build the worker image
 
 ---
 kind: Deploy
-description: Deploy the worker that collects votes and stores results in a postgres table
-# Here we're using the container type which means Garden will generate the manifests.
-# We generally recommend using the 'kubernetes' or 'helm' types if you already have manifests
-# or charts at hand but the 'container' type can be a good way to get started quickly if you don't.
-# You can learn more about the Kubernetes action types here: https://docs.garden.io/kubernetes-plugins/action-types
-type: container
 name: worker
-build: worker
-spec:
-  env:
-    PGDATABASE: ${var.postgresDatabase}
-    PGUSER: ${var.postgresUsername}
-    PGPASSWORD: ${var.postgresPassword}
+type: kubernetes
+description: Deploy the worker that collects votes and stores results in a postgres table
+environments: [local, remote]
+
 dependencies:
+  - build.worker
   - deploy.redis
   - run.db-init
+
+spec:
+  manifestFiles: [./manifests/*]
+
+  # Here we override the default manifest values. This allows us to e.g. set the correct container image version
+  patchResources:
+    - kind: Deployment
+      name: worker
+      patch:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: worker
+                  image: ${actions.build.worker.outputs.deploymentImageId}
+                  env:
+                    - name: PGDATABASE
+                      value: ${var.postgresDatabase}
+                    - name: PGUSER
+                      value: ${var.postgresUsername}
+                    - name: PGPASSWORD
+                      value: ${var.postgresPassword}
+              imagePullSecrets:
+                - name: ${var.imagePullSecretName || 'regcred'}
