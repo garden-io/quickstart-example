@@ -21,7 +21,7 @@
 
 This repository contains the Garden Quickstart example. Please see our [Quickstart Guide](https://docs.garden.io/getting-started/quickstart) for step-by-step instructions on how to deploy this project. If you see any issues or bugs, kindly report them to the [main Garden repo](https://github.com/garden-io/garden/issues/new).
 
-![Deploying the quickstart example](https://public-assets-for-docs-site.s3.eu-central-1.amazonaws.com/quickstart-exampe-reduced.gif)
+![Deploying the quickstart example](https://public-assets-for-docs-site.s3.eu-central-1.amazonaws.com/quickstart-example.gif)
 
 ## About the Project
 
