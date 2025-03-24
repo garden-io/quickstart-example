@@ -9,12 +9,10 @@ name: result
 type: kubernetes
 description: Deploy the result websocket server
 dependencies: [build.result, run.db-init]
+environments: [local, remote]
 
 spec:
-  # Variables such as container image are set via Garden template strings
-  # in the manifests themselves. Variables can also be set in the Garden config to ensure the manifests
-  # remain valid K8s manifests. Learn more at: https://docs.garden.io/kubernetes-plugins/action-types/kubernetes
-  files: [./manifests/*]
+  manifestFiles: [./manifests/*]
 
   # This tells Garden what "target" to use for logs, code syncing and more
   defaultTarget:
@@ -28,6 +26,27 @@ spec:
         exclude: [node_modules]
     overrides:
       - args: [nodemon, server.js]
+
+  # Here we override the default manifest values. This allows us to e.g. set the correct container image version
+  patchResources:
+    - kind: Deployment
+      name: result
+      patch:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: result
+                  image: ${actions.build.result.outputs.deploymentImageId}
+                  env:
+                    - name: PGDATABASE
+                      value: ${var.postgresDatabase}
+                    - name: PGUSER
+                      value: ${var.postgresUsername}
+                    - name: PGPASSWORD
+                      value: ${var.postgresPassword}
+              imagePullSecrets:
+                - name: ${var.imagePullSecretName || 'regcred'}
 
 ---
 kind: Test

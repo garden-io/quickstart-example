@@ -2,6 +2,10 @@ kind: Deploy
 name: db
 type: helm
 description: Deploy a Postgres database for storing voting results
+environments: [local, remote]
+dependencies:
+  - build.api
+  - deploy.redis
 
 spec:
   chart:
@@ -26,6 +30,7 @@ spec:
 kind: Run
 name: db-init
 type: kubernetes-exec
+environments: [local, remote]
 
 dependencies:
   - deploy.db
@@ -45,6 +50,7 @@ spec:
 kind: Run
 name: db-clear
 type: kubernetes-exec
+environments: [local, remote]
 
 dependencies:
   - deploy.db

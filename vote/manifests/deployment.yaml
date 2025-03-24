@@ -13,45 +13,40 @@ spec:
         app: vote
     spec:
       containers:
-      - name: vote
-        image: ${actions.build.vote.outputs.deploymentImageId}
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: HOSTNAME
-            value: ${var.hostname}
-          - name: VITE_USERNAME
-            value: ${local.username}
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 90
-          periodSeconds: 5
-          successThreshold: 1
-          timeoutSeconds: 3
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 90
-          httpGet:
-            path: /
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 2
-          periodSeconds: 1
-          successThreshold: 2
-          timeoutSeconds: 3
-        resources:
-          limits:
-            memory: 300Mi
-          requests:
-            cpu: 10m
-            memory: 90Mi
-        securityContext:
-          allowPrivilegeEscalation: false
+        - name: vote
+          image: vote
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 90
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 1
+            successThreshold: 2
+            timeoutSeconds: 3
+          resources:
+            limits:
+              memory: 300Mi
+            requests:
+              cpu: 10m
+              memory: 90Mi
+          securityContext:
+            allowPrivilegeEscalation: false
       imagePullSecrets:
-      - name: ${var.imagePullSecretName || '<empty>'}
+        - name: regcred

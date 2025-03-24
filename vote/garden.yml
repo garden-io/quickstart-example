@@ -8,6 +8,7 @@ kind: Deploy
 name: vote
 type: kubernetes
 description: Deploy the vote UI
+environments: [local, remote]
 dependencies:
   - build.vote
   - deploy.api
@@ -15,13 +16,10 @@ dependencies:
   - deploy.worker
 
 variables:
-  hostname: "vote.${var.baseHostname || providers.ephemeral-kubernetes.outputs.default-hostname}"
+  hostname: 'vote.${var.baseHostname}'
 
 spec:
-  # Variables such as container image are set via Garden template strings
-  # in the manifests themselves. Variables can also be set in the Garden config to ensure the manifests
-  # remain valid K8s manifests. Learn more at: https://docs.garden.io/kubernetes-plugins/action-types/kubernetes
-  files: [./manifests/*]
+  manifestFiles: [./manifests/*]
 
   # This tells Garden what "target" to use for logs, code syncing and more
   defaultTarget:
@@ -36,6 +34,42 @@ spec:
         exclude: [node_modules]
     overrides:
       - args: [npm, run, dev]
+
+  # Here we override the default manifest values. This allows us to e.g. set the correct container image version
+  patchResources:
+    - kind: Deployment
+      name: vote
+      patch:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: vote
+                  image: ${actions.build.vote.outputs.deploymentImageId}
+                  env:
+                    - name: HOSTNAME
+                      value: ${var.hostname}
+                    - name: VITE_USERNAME
+                      value: ${local.username}
+              imagePullSecrets:
+                - name: ${var.imagePullSecretName || 'regcred'}
+    # We also override the Ingress resouce to dynamically set the hostname
+    - name: vote
+      kind: Ingress
+      patch:
+        spec:
+          ingressClassName: nginx
+          rules:
+            - host: ${var.hostname}
+              http:
+                paths:
+                  - backend:
+                      service:
+                        name: vote
+                        port:
+                          number: 80
+                    path: /
+                    pathType: Prefix
 
 ---
 kind: Test

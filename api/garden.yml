@@ -8,16 +8,11 @@ kind: Deploy
 name: api
 type: kubernetes
 description: Deploy the vote API
+environments: [local, remote]
 dependencies: [build.api, deploy.redis]
 
-variables:
-  hostname: api.${var.baseHostname || providers.ephemeral-kubernetes.outputs.default-hostname}
-
 spec:
-  # Variables such as container image are set via Garden template strings
-  # in the manifests themselves. Variables can also be set in the Garden config to ensure the manifests
-  # remain valid K8s manifests. Learn more at: https://docs.garden.io/kubernetes-plugins/action-types/kubernetes
-  files: [./manifests/*]
+  manifestFiles: [./manifests/*]
 
   # This tells Garden what "target" to use for logs, code syncing and more
   defaultTarget:
@@ -32,7 +27,22 @@ spec:
         exclude: [.venv]
     overrides:
       # Use entr to restart server on file changes in sync mode
-      - args: ["/bin/sh", "-c", "ls /app/app.py | entr -n -r python /app/app.py"]
+      - args:
+          ["/bin/sh", "-c", "ls /app/app.py | entr -n -r python /app/app.py"]
+
+  # Here we override the default manifest values. This allows us to e.g. set the correct container image version
+  patchResources:
+    - kind: Deployment
+      name: api
+      patch:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: api
+                  image: ${actions.build.api.outputs.deploymentImageId}
+              imagePullSecrets:
+                - name: ${var.imagePullSecretName || 'regcred'}
 
 ---
 kind: Test

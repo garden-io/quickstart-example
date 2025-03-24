@@ -2,6 +2,7 @@ kind: Deploy
 name: redis
 type: helm
 description: Deploy a Redis service for queueing votes before they are aggregated
+environments: [local, remote]
 
 spec:
   chart:
