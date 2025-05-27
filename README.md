@@ -37,6 +37,12 @@ In this example we use the `local-kubernetes` provider to deploy the project to 
 
 If you'd rather deploy it to your own cluster, you can update the values in the [`project.garden.yml`](https://github.com/garden-io/quickstart-example/blob/main/project.garden.yml) file. To learn more about our different K8s plugins, check out [our documentation](https://docs.garden.io/kubernetes-plugins/about).
 
+If you don't have Kubernetes (local or remote), you can still use Garden to build the containers in the project via Garden's remote container builder by using the `no-k8s` environment like so:
+
+```console
+garden build --env no-k8s
+```
+
 ### Garden Actions
 
 The project has the following micro services:

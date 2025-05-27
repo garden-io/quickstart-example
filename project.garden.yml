@@ -22,6 +22,7 @@ environments:
     variables:
       baseHostname: "<add you values here>"
       imagePullSecretName: "<add you values here>"
+  - name: no-k8s # <--- An environment that doesn't require Kubernetes for testing the container builder
 
 providers:
   - name: container
