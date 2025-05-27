@@ -35,6 +35,14 @@ spec:
     overrides:
       - args: [npm, run, dev]
 
+  # Hard code the local port for the port forward so that we have a consistent URL that we can use in docs.
+  # This is optional configuration and by default Garden handles port forwards for you and assigns a random port.
+  portForwards:
+    - name: http
+      resource: Service/vote
+      targetPort: 80
+      localPort: 9124 # <--- Do not change this if you're a Garden engineer, it'll break our docs.
+
   # Here we override the default manifest values. This allows us to e.g. set the correct container image version
   patchResources:
     - kind: Deployment
