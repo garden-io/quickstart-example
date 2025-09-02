@@ -7,7 +7,7 @@ dotIgnoreFile: .gitignore
 variables:
   postgresUsername: postgres
   postgresDatabase: postgres
-  postgresPassword: postgres
+  postgresPassword: foo
 
   # Replace underscores as Kubernetes namespaces do not allow them.
   userNamespace: garden-quickstart-${kebabCase(local.username)}
