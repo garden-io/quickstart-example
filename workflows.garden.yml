@@ -1,0 +1,15 @@
+kind: Workflow
+name: test-a
+
+steps:
+  - name: test
+    script: echo foo
+
+---
+
+kind: Workflow
+name: test-b
+
+steps:
+  - name: test
+    script: echo bar
