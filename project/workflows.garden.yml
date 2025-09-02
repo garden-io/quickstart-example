@@ -3,12 +3,12 @@ name: test-a
 
 steps:
   - name: test
-    script: echo foo
+    script: echo changed
 
 ---
 
 kind: Workflow
-name: test-b
+name: test-c
 
 steps:
   - name: test

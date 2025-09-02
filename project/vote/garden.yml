@@ -88,6 +88,8 @@ dependencies: [build.vote]
 spec:
   image: ${actions.build.vote.outputs.deploymentImageId}
   args: [npm, run, test:unit]
+  env:
+    FOO: bar
 
 # E2E Runner configs
 ---
